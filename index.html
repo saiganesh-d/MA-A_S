@@ -181,13 +181,13 @@
     .hero-skyline {
       position: absolute;
       bottom: 0;
-      right: 0;
+      right: 10%;
       width: 72%;
       max-width: 1150px;
       height: auto;
       z-index: 1;
       pointer-events: none;
-      opacity: 0.85;
+      opacity: 1;
     }
 
     .hero-section::after {
@@ -2318,13 +2318,13 @@
        FOOTER
     ================================================ */
     footer {
-      background: linear-gradient(90deg, #0d1b73 0%, #6a0dad 50%, #00c2cb 100%);
+      background: transparent;
       padding: 22px;
     }
 
     footer p {
-      color: #fff;
-      font-size: 14px;
+      color: #0d1b73;
+      font-size: clamp(18px, 1.5vw, 26px);
       font-weight: 600;
       margin: 0;
       text-align: center;
@@ -2494,27 +2494,42 @@
        form, matching the tablet treatment, so nothing overlaps. */
     @media (min-width: 1025px) and (max-width: 1400px) {
       .hero-text-col {
-        flex: 0 0 50%;
-        max-width: 50%;
+        flex: 0 0 38%;
+        max-width: 38%;
       }
 
       .hero-form-col {
-        flex: 0 0 44%;
-        max-width: 44%;
+        flex: 0 0 27%;
+        max-width: 27%;
       }
 
+      /* At 110–125% zoom (effective ~1093–1396px) there isn't room for the full
+         desktop composition, so instead of ghosting the student over the form
+         (old opacity:0.16 bug) or hiding it, we narrow the columns and stand a
+         smaller full-colour student in the gap — in front (z-index 4), its flag
+         just kissing the card corner, inputs left clean. */
       .hero-student {
-        left: auto;
-        right: 0;
-        transform: none;
-        height: 100%;
-        max-width: 48%;
-        opacity: 0.16;
+        left: 55.5%;
+        height: 68%;
+        max-width: 42%;
       }
 
       .hero-skyline {
-        width: 58%;
-        opacity: 0.5;
+        width: 60%;
+      }
+    }
+
+    /* Wide desktop only (>=1501px, where there's genuine room): nudge the
+       enquire form a little right for extra breathing space, and grow the
+       student a touch. Scoped above 1500 on purpose so the tighter 1401–1500
+       band (which already overlaps at tall viewports) is left untouched. */
+    @media (min-width: 1501px) {
+      .hero-student {
+        height: 88%;
+      }
+
+      .hero-form-col {
+        transform: translateX(24px);
       }
     }
 
@@ -2540,12 +2555,9 @@
 
       /* No room for the centered student image at tablet widths —
          fade it into the background behind the form instead of overlapping text. */
+      /* Same ghost-over-form issue on tablet — hide the student, keep skyline. */
       .hero-student {
-        left: auto;
-        right: 0;
-        transform: none;
-        height: 100%;
-        opacity: 0.16;
+        display: none;
       }
 
       .hero-skyline {
